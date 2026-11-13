@@ -75,6 +75,10 @@ All text is in `SimpleNetwork/assets/simplenetwork/lang/en.json`. To add a langu
 
 Please open an issue on this repository's Issues tab. Include your Vintage Story version, the SimpleNetwork version, what you did, and any error from your client or server log.
 
+## Credits
+
+Made by Vertex101. Developed with the help of Claude, an AI assistant by Anthropic.
+
 ## License
 
 [MIT](LICENSE): you may use, change and share this code, as long as the copyright notice is kept.
