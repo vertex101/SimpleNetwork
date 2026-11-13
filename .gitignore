@@ -674,5 +674,8 @@ fabric.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/csharp,visualstudio,visualstudiocode,rider
 ### SimpleNetwork ###
-# Local helper tools (texture generator + its preview image)
+# Local helper tools (texture/icon generators + preview images)
 tools/
+
+# ModDB promo images (logos), kept locally only
+promo/

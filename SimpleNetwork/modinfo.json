@@ -6,7 +6,7 @@
     "authors": [
         "Vertex101"
     ],
-    "description": "Connect your storage into a network and access it from a terminal with built-in crafting.",
+    "description": "Link your chests, crates and vessels into one storage network with cables. Search, sort and craft from all of it at a terminal, reach it wirelessly, automate with importers and exporters, and keep storage organised with priorities and filters.",
     "version": "1.0.0",
     "dependencies": {
         "game": "1.22.0"
