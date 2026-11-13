@@ -1,0 +1,58 @@
+{
+	code: "importer",
+	class: "SimpleNetwork.Port",
+	entityclass: "SimpleNetwork.Port",
+	// A coloured piece of cable. The front ("side" variant) faces the block it works on and always
+	// shows an arm with a connector plate there; arms to connected cables are added in code.
+	variantgroups: [
+		{ code: "side", states: ["north", "east", "south", "west", "up", "down"] }
+	],
+	creativeinventory: { "general": ["*-north"] },
+	attributes: {
+		portMode: "import",
+		handbook: {
+			groupBy: ["importer-*"],
+			extraSections: [
+				{ title: "simplenetwork:handbook-port-title", text: "simplenetwork:handbook-importer-text" }
+			]
+		}
+	},
+	drawtype: "json",
+	shapeByType: {
+		"*-north": { base: "block/cable", selectiveElements: ["Core", "ArmNorth", "PlateNorth"] },
+		"*-east": { base: "block/cable", selectiveElements: ["Core", "ArmEast", "PlateEast"] },
+		"*-south": { base: "block/cable", selectiveElements: ["Core", "ArmSouth", "PlateSouth"] },
+		"*-west": { base: "block/cable", selectiveElements: ["Core", "ArmWest", "PlateWest"] },
+		"*-up": { base: "block/cable", selectiveElements: ["Core", "ArmUp", "PlateUp"] },
+		"*-down": { base: "block/cable", selectiveElements: ["Core", "ArmDown", "PlateDown"] }
+	},
+	// Inventory icon: the plate faces the viewer (icons show the south side).
+	shapeInventory: { base: "block/cable", selectiveElements: ["Core", "ArmNorth", "ArmSouth", "PlateSouth"] },
+	textures: {
+		core: { base: "block/port/import-core" },
+		sheath: { base: "block/port/import-sheath" },
+		end: { base: "block/port/import-end" },
+		plate: { base: "block/port/import-front" }
+	},
+	blockmaterial: "Metal",
+	lightAbsorption: 0,
+	replaceable: 160,
+	resistance: 1,
+	sidesolid: { all: false },
+	sideopaque: { all: false },
+	emitSideAo: { all: false },
+	collisionSelectionBoxByType: {
+		"*-north": { x1: 0.25, y1: 0.25, z1: 0, x2: 0.75, y2: 0.75, z2: 0.6875 },
+		"*-east": { x1: 0.3125, y1: 0.25, z1: 0.25, x2: 1, y2: 0.75, z2: 0.75 },
+		"*-south": { x1: 0.25, y1: 0.25, z1: 0.3125, x2: 0.75, y2: 0.75, z2: 1 },
+		"*-west": { x1: 0, y1: 0.25, z1: 0.25, x2: 0.6875, y2: 0.75, z2: 0.75 },
+		"*-up": { x1: 0.25, y1: 0.3125, z1: 0.25, x2: 0.75, y2: 1, z2: 0.75 },
+		"*-down": { x1: 0.25, y1: 0, z1: 0.25, x2: 0.75, y2: 0.6875, z2: 0.75 }
+	},
+	sounds: {
+		"place": "game:block/chute",
+		"break": "game:block/chute",
+		"hit": "game:block/chute",
+		"walk": "game:walk/stone"
+	}
+}

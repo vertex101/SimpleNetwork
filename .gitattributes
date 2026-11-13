@@ -1,0 +1,8 @@
+# Store text files with LF line endings in the repository; Git converts them for your editor.
+* text=auto
+
+# Shell scripts must keep LF line endings, or they fail to run on Linux/macOS.
+*.sh text eol=lf
+
+# Images are binary: never touch their line endings.
+*.png binary

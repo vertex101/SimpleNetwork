@@ -1,0 +1,9 @@
+{
+	ingredientPattern: "I",
+	ingredients: {
+		"I": { type: "item", code: "game:ingot-copper" }
+	},
+	width: 1,
+	height: 1,
+	output: { type: "block", code: "simplenetwork:cable", quantity: 4 }
+}

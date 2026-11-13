@@ -1,0 +1,36 @@
+{
+	code: "cable",
+	class: "SimpleNetwork.Cable",
+	creativeinventory: { "general": ["*"] },
+	attributes: {
+		handbook: {
+			extraSections: [
+				{ title: "simplenetwork:handbook-cable-title", text: "simplenetwork:handbook-cable-text" }
+			]
+		}
+	},
+	drawtype: "json",
+	// In the world only the core is the base mesh; arms are added per neighbour in code (BlockNetworkCable).
+	shape: { base: "block/cable", selectiveElements: ["Core"] },
+	shapeInventory: { base: "block/cable", selectiveElements: ["Core", "ArmNorth", "ArmSouth"] },
+	textures: {
+		core: { base: "block/cable/core" },
+		sheath: { base: "block/cable/sheath" },
+		end: { base: "block/cable/end" },
+		plate: { base: "block/cable/end" }
+	},
+	blockmaterial: "Metal",
+	lightAbsorption: 0,
+	replaceable: 160,
+	resistance: 1,
+	sidesolid: { all: false },
+	sideopaque: { all: false },
+	emitSideAo: { all: false },
+	collisionSelectionBox: { x1: 0.3125, y1: 0.3125, z1: 0.3125, x2: 0.6875, y2: 0.6875, z2: 0.6875 },
+	sounds: {
+		"place": "game:block/chute",
+		"break": "game:block/chute",
+		"hit": "game:block/chute",
+		"walk": "game:walk/stone"
+	}
+}

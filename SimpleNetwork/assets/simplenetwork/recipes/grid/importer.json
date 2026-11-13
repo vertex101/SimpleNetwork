@@ -1,0 +1,11 @@
+{
+	ingredientPattern: "ICI,IHI",
+	ingredients: {
+		"I": { type: "item", code: "game:ingot-copper" },
+		"C": { type: "block", code: "simplenetwork:cable" },
+		"H": { type: "block", code: "game:hopper" }
+	},
+	width: 3,
+	height: 2,
+	output: { type: "block", code: "simplenetwork:importer-north" }
+}

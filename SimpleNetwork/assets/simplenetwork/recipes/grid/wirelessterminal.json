@@ -1,0 +1,11 @@
+{
+	ingredientPattern: "IQI,ITI",
+	ingredients: {
+		"I": { type: "item", code: "game:ingot-copper" },
+		"Q": { type: "item", code: "game:clearquartz" },
+		"T": { type: "block", code: "simplenetwork:terminal-*" }
+	},
+	width: 3,
+	height: 2,
+	output: { type: "item", code: "simplenetwork:wirelessterminal" }
+}

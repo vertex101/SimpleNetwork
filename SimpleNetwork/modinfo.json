@@ -1,0 +1,14 @@
+﻿{
+    "$schema": "https://moddbcdn.vintagestory.at/schema/modinfo.latest.json",
+    "type": "Code",
+    "modid": "simplenetwork",
+    "name": "SimpleNetwork",
+    "authors": [
+        "Vertex101"
+    ],
+    "description": "Connect your storage into a network and access it from a terminal with built-in crafting.",
+    "version": "1.0.0",
+    "dependencies": {
+        "game": "1.22.0"
+    }
+}

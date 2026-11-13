@@ -1,0 +1,63 @@
+{
+	code: "terminal",
+	class: "SimpleNetwork.Terminal",
+	// Faces the player when placed. Like the game's own blocks, the "-north" variant has its
+	// front (the screen) on the south side, i.e. towards a player who was looking north.
+	// The back (here: north), top and bottom have cable ports; only those sides connect to the network.
+	variantgroups: [
+		{ code: "side", loadFromProperties: "abstract/horizontalorientation" }
+	],
+	behaviors: [
+		{ name: "HorizontalOrientable", properties: { dropBlockFace: "east" } }
+	],
+	creativeinventory: { "general": ["*-east"] },
+	attributes: {
+		handbook: {
+			groupBy: ["terminal-*"],
+			extraSections: [
+				{ title: "simplenetwork:handbook-terminal-title", text: "simplenetwork:handbook-terminal-text" }
+			]
+		}
+	},
+	drawtype: "cube",
+	texturesByType: {
+		"*-north": {
+			all: { base: "block/terminal/side" },
+			north: { base: "block/terminal/top" },
+			up: { base: "block/terminal/top" },
+			down: { base: "block/terminal/top" },
+			south: { base: "block/terminal/screen" }
+		},
+		"*-east": {
+			all: { base: "block/terminal/side" },
+			east: { base: "block/terminal/top" },
+			up: { base: "block/terminal/top" },
+			down: { base: "block/terminal/top" },
+			west: { base: "block/terminal/screen" }
+		},
+		"*-south": {
+			all: { base: "block/terminal/side" },
+			south: { base: "block/terminal/top" },
+			up: { base: "block/terminal/top" },
+			down: { base: "block/terminal/top" },
+			north: { base: "block/terminal/screen" }
+		},
+		"*-west": {
+			all: { base: "block/terminal/side" },
+			west: { base: "block/terminal/top" },
+			up: { base: "block/terminal/top" },
+			down: { base: "block/terminal/top" },
+			east: { base: "block/terminal/screen" }
+		}
+	},
+	blockmaterial: "Metal",
+	resistance: 2,
+	sidesolid: { all: true },
+	sideopaque: { all: true },
+	sounds: {
+		"place": "game:block/chute",
+		"break": "game:block/chute",
+		"hit": "game:block/chute",
+		"walk": "game:walk/stone"
+	}
+}
