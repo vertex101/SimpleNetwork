@@ -1,0 +1,81 @@
+name: Bug report
+description: Something in SimpleNetwork isn't working the way it should.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! The more detail you give, the faster it can be fixed.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the problem. What did you expect to happen instead?
+      placeholder: "When I shift-click the crafting output, the items disappear instead of going into my inventory."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: How can the problem be made to happen again?
+      placeholder: |
+        1. Place a terminal and connect two chests with cables
+        2. Open the terminal and ...
+        3. ...
+    validations:
+      required: true
+
+  - type: input
+    id: game-version
+    attributes:
+      label: Vintage Story version
+      description: Shown on the game's main menu.
+      placeholder: "1.22.0"
+    validations:
+      required: true
+
+  - type: input
+    id: mod-version
+    attributes:
+      label: SimpleNetwork version
+      description: Shown in the game's Mods menu, or in the zip file's name.
+      placeholder: "1.0.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: game-type
+    attributes:
+      label: Where does it happen?
+      options:
+        - Singleplayer
+        - Multiplayer (I'm a player on a server)
+        - Multiplayer (I run the server)
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: other-mods
+    attributes:
+      label: Other mods installed
+      description: List any other mods you use, or write "none". Some problems only happen together with another mod.
+      placeholder: "none"
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error messages or log
+      description: |
+        If the game showed an error or crashed, paste it here. Logs are in your Vintage Story data folder under `Logs`
+        (on Windows: `%APPDATA%\VintagestoryData\Logs`): `client-main.log` for your game, `server-main.log` on a server.
+      render: shell
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: Screenshots, your simplenetwork.json config, or anything else that might help.

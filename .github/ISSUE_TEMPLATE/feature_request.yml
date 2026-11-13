@@ -1,0 +1,26 @@
+name: Feature request
+description: Suggest a new feature or an improvement to SimpleNetwork.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like?
+      description: Describe the feature or change.
+      placeholder: "A way to see which chest an item is stored in."
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why would it help?
+      description: What would it make easier, or what problem would it solve for you?
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: Examples from other mods or games, sketches, screenshots...
