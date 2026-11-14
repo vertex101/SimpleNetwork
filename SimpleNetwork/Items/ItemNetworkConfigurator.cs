@@ -11,6 +11,16 @@ namespace SimpleNetwork.Items;
 /// </summary>
 public class ItemNetworkConfigurator : Item
 {
+    public override void OnLoaded(ICoreAPI api)
+    {
+        base.OnLoaded(api);
+
+        // Some containers (crates, for example) handle sneak + right-click themselves, and the game
+        // normally lets such a block go first, so the crate would just take the configurator in.
+        // This makes the game ask the configurator first whenever the player is sneaking.
+        HeldPriorityInteract = true;
+    }
+
     public override void OnHeldInteractStart(ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel, bool firstEvent, ref EnumHandHandling handling)
     {
         if (!firstEvent || blockSel == null || !byEntity.Controls.ShiftKey)
