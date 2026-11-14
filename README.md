@@ -29,7 +29,7 @@ The server's `ModConfig/simplenetwork.json` is created on first start:
 
 | Setting | Default | What it does |
 |---|---|---|
-| `StorageBlockEntityClasses` | `GenericTypedContainer`, `LabeledChest`, `Crate` | Block entity classes that count as storage (the defaults cover chests, trunks, reed baskets, storage vessels, labeled chests and crates) |
+| `StorageBlockEntityClasses` | `GenericTypedContainer`, `LabeledChest`, `Crate`, `BEBetterCrate` | Block entity classes that count as storage (the defaults cover chests, trunks, reed baskets, storage vessels, labeled chests, crates, and crates from the Better Crates mod) |
 | `StorageBlockCodes` | none | Extra storage by block code, wildcards allowed (e.g. `somemod:bigchest-*`) |
 | `ExcludedBlockCodes` | none | Block codes that never count as storage |
 | `MaxNetworkBlocks` | 4096 | Largest network (cables and terminals) that will be scanned |
@@ -39,6 +39,8 @@ The server's `ModConfig/simplenetwork.json` is created on first start:
 | `EnableWirelessTerminal` | true | Allow the Wireless Terminal |
 | `EnableImportExport` | true | Allow the Network Importer and Exporter |
 | `EnableConfigurator` | true | Allow the Network Configurator (container priorities and filters) |
+
+When a newer version of the mod adds a default storage type, it is added to existing config files once (tracked by `ConfigVersion`); if you remove it afterwards, it stays removed.
 
 Switching a feature off removes its crafting recipe (after a server restart) and stops existing ones from working (also right after `/stn reload`). The blocks and items stay in the game, so worlds that already have them don't break; with the configurator off, saved priorities and filters are ignored.
 

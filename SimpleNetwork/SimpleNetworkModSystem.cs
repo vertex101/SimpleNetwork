@@ -168,6 +168,10 @@ public class SimpleNetworkModSystem : ModSystem
             loaded = SimpleNetworkConfig.CreateDefault();
             Mod.Logger.Notification("Created default {0}", ConfigFileName);
         }
+        else if (loaded.Upgrade())
+        {
+            Mod.Logger.Notification("Updated {0} to config version {1} (added new default storage types)", ConfigFileName, loaded.ConfigVersion);
+        }
 
         // Save it back so settings added in newer versions of the mod show up in the file.
         sapi.StoreModConfig(loaded, ConfigFileName);

@@ -10,6 +10,15 @@ namespace SimpleNetwork.Config;
 public class SimpleNetworkConfig
 {
     /// <summary>
+    /// Version of this file's layout. Used to add new default storage types to config files made
+    /// by an older version of the mod (see <see cref="Upgrade"/>). Old files don't have this setting,
+    /// so it reads as 0 for them.
+    /// </summary>
+    public const int CurrentConfigVersion = 2;
+
+    public int ConfigVersion { get; set; }
+
+    /// <summary>
     /// Block entity class names that count as storage, e.g. "GenericTypedContainer"
     /// (chests, trunks, baskets, storage vessels). Matching is case-insensitive.
     /// Easiest way to support a modded storage family that shares one class.
@@ -52,13 +61,41 @@ public class SimpleNetworkConfig
 
     public static SimpleNetworkConfig CreateDefault() => new()
     {
+        ConfigVersion = CurrentConfigVersion,
         StorageBlockEntityClasses = new()
         {
             "GenericTypedContainer", // chest, trunk, reed basket, storage vessels
             "LabeledChest",
-            "Crate"
+            "Crate",
+            "BEBetterCrate"          // Better Crates mod
         },
         StorageBlockCodes = new(),
         ExcludedBlockCodes = new()
     };
+
+    /// <summary>
+    /// Brings a config file from an older version of the mod up to date, once: storage types that
+    /// became defaults since then are added. Each step only runs for files older than it, so a
+    /// server owner who later removes one of these on purpose keeps it removed.
+    /// Returns true if anything changed.
+    /// </summary>
+    public bool Upgrade()
+    {
+        if (ConfigVersion >= CurrentConfigVersion) return false;
+
+        // Version 2 (mod 1.1.2): Better Crates became a default storage type.
+        if (ConfigVersion < 2) AddStorageClass("BEBetterCrate");
+
+        ConfigVersion = CurrentConfigVersion;
+        return true;
+    }
+
+    private void AddStorageClass(string entityClass)
+    {
+        StorageBlockEntityClasses ??= new();
+        if (!StorageBlockEntityClasses.Exists(c => string.Equals(c, entityClass, System.StringComparison.OrdinalIgnoreCase)))
+        {
+            StorageBlockEntityClasses.Add(entityClass);
+        }
+    }
 }
