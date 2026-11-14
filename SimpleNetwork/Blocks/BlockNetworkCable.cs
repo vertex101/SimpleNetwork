@@ -1,7 +1,10 @@
 using System.Collections.Concurrent;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
+using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
+using Vintagestory.API.Server;
+using Vintagestory.GameContent;
 
 namespace SimpleNetwork.Blocks;
 
@@ -55,6 +58,50 @@ public class BlockNetworkCable : Block, INetworkBlock
     {
         base.OnBlockRemoved(world, pos);
         SimpleNetworkModSystem.OnNetworkChanged(world);
+    }
+
+    /// <summary>
+    /// Right-clicking a cable while holding a chiseled block hides the cable inside that chiseled
+    /// block (it becomes a BlockChiseledCable). Anything else in hand behaves as normal.
+    /// </summary>
+    public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
+    {
+        var held = byPlayer.InventoryManager.ActiveHotbarSlot;
+        if (held?.Itemstack?.Block is not BlockMicroBlock || held.Itemstack.Block is BlockChiseledCable)
+        {
+            return base.OnBlockInteractStart(world, byPlayer, blockSel);
+        }
+
+        if (world.Side == EnumAppSide.Server) CoverWith(world, byPlayer, blockSel.Position, held);
+        return true; // also on the client, so the chiseled block isn't placed against the cable instead
+    }
+
+    private static void CoverWith(IWorldAccessor world, IPlayer byPlayer, BlockPos pos, ItemSlot held)
+    {
+        if (world.Claims.TestAccess(byPlayer, pos, EnumBlockAccessFlags.BuildOrBreak) != EnumWorldAccessResponse.Granted)
+        {
+            (byPlayer as IServerPlayer)?.SendMessage(GlobalConstants.GeneralChatGroup,
+                L.GetL((byPlayer as IServerPlayer)?.LanguageCode, "msg-cover-noaccess"), EnumChatType.Notification);
+            return;
+        }
+
+        var covered = world.GetBlock(new AssetLocation(L.Domain, BlockChiseledCable.BlockCode));
+        if (covered == null || held.Itemstack == null) return;
+
+        var shape = held.Itemstack.Clone();
+        shape.StackSize = 1;
+
+        // Swap the cable for the covered cable, then load the chiseled shape into it the same way
+        // the game does when a chiseled block is placed.
+        world.BlockAccessor.SetBlock(covered.Id, pos);
+        covered.OnBlockPlaced(world, pos, shape);
+
+        if (byPlayer.WorldData.CurrentGameMode != EnumGameMode.Creative)
+        {
+            held.TakeOut(1);
+            held.MarkDirty();
+        }
+        world.PlaySoundAt(new AssetLocation("game", "sounds/player/build"), pos.X + 0.5, pos.Y + 0.5, pos.Z + 0.5, byPlayer);
     }
 
     public override void OnLoaded(ICoreAPI api)

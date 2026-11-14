@@ -65,6 +65,12 @@ public class BlockNetworkPort : BlockNetworkCable
         if (world.Side != EnumAppSide.Server || byPlayer is not IServerPlayer player) return true;
         if (world.BlockAccessor.GetBlockEntity(blockSel.Position) is not BlockEntityNetworkPort port) return true;
 
+        if (!api.ModLoader.GetModSystem<SimpleNetworkModSystem>().Config.EnableImportExport)
+        {
+            Tell(player, "port-disabled");
+            return true;
+        }
+
         var held = player.InventoryManager.ActiveHotbarSlot;
         if (held != null && !held.Empty)
         {

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using SimpleNetwork.Blocks;
 using SimpleNetwork.Blocks.Entities;
 using SimpleNetwork.Config;
@@ -64,6 +66,7 @@ public class SimpleNetworkModSystem : ModSystem
         // These names are what the "class" field in the blocktype JSON files refers to.
         api.RegisterBlockClass("SimpleNetwork.Cable", typeof(BlockNetworkCable));
         api.RegisterBlockClass("SimpleNetwork.Terminal", typeof(BlockNetworkTerminal));
+        api.RegisterBlockClass("SimpleNetwork.ChiseledCable", typeof(BlockChiseledCable));
         api.RegisterItemClass("SimpleNetwork.WirelessTerminal", typeof(ItemWirelessTerminal));
         api.RegisterBlockClass("SimpleNetwork.Port", typeof(BlockNetworkPort));
         api.RegisterBlockEntityClass("SimpleNetwork.Port", typeof(BlockEntityNetworkPort));
@@ -89,6 +92,10 @@ public class SimpleNetworkModSystem : ModSystem
         StorageSettingsServer = new StorageSettingsServer(api, this, serverChannel);
 
         api.Event.PlayerNowPlaying += player => serverChannel.SendPacket(BuildStorageConfigPacket(), player);
+
+        // Recipes are loaded by now, and players can't have joined yet (they receive the recipe list
+        // when they join), so this is the moment to take out recipes of disabled features.
+        api.Event.ServerRunPhase(EnumServerRunPhase.WorldReady, RemoveDisabledRecipes);
 
         // Descriptions use the server's language; command replies use the language of whoever ran the command.
         api.ChatCommands.Create("simplenetwork")
@@ -122,12 +129,18 @@ public class SimpleNetworkModSystem : ModSystem
 
         channel.SetMessageHandler<StorageConfigPacket>(packet =>
         {
-            StorageFilter = new StorageFilter(new SimpleNetworkConfig
+            // The client's copy of the server's settings: enough to draw cables and to know which
+            // features are switched off.
+            Config = new SimpleNetworkConfig
             {
                 StorageBlockEntityClasses = packet.StorageBlockEntityClasses ?? new(),
                 StorageBlockCodes = packet.StorageBlockCodes ?? new(),
-                ExcludedBlockCodes = packet.ExcludedBlockCodes ?? new()
-            });
+                ExcludedBlockCodes = packet.ExcludedBlockCodes ?? new(),
+                EnableWirelessTerminal = packet.EnableWirelessTerminal,
+                EnableImportExport = packet.EnableImportExport,
+                EnableConfigurator = packet.EnableConfigurator
+            };
+            StorageFilter = new StorageFilter(Config);
         });
     }
 
@@ -172,8 +185,32 @@ public class SimpleNetworkModSystem : ModSystem
     {
         StorageBlockEntityClasses = Config.StorageBlockEntityClasses,
         StorageBlockCodes = Config.StorageBlockCodes,
-        ExcludedBlockCodes = Config.ExcludedBlockCodes
+        ExcludedBlockCodes = Config.ExcludedBlockCodes,
+        EnableWirelessTerminal = Config.EnableWirelessTerminal,
+        EnableImportExport = Config.EnableImportExport,
+        EnableConfigurator = Config.EnableConfigurator
     };
+
+    /// <summary>Takes the crafting recipes of switched-off features out of the game (server start only).</summary>
+    private void RemoveDisabledRecipes()
+    {
+        if (sapi == null) return;
+
+        var disabledCodes = new List<string>();
+        if (!Config.EnableWirelessTerminal) disabledCodes.Add("wirelessterminal");
+        if (!Config.EnableImportExport) disabledCodes.AddRange(new[] { "importer", "exporter" });
+        if (!Config.EnableConfigurator) disabledCodes.Add("configurator");
+        if (disabledCodes.Count == 0) return;
+
+        // Output codes look like "simplenetwork:wirelessterminal" or "simplenetwork:importer-north".
+        int removed = sapi.World.GridRecipes.RemoveAll(recipe =>
+        {
+            var code = recipe.Output?.Code;
+            return code != null && code.Domain == L.Domain
+                   && disabledCodes.Any(c => code.Path == c || code.Path.StartsWith(c + "-"));
+        });
+        Mod.Logger.Notification("Disabled features: {0} (removed {1} recipe(s))", string.Join(", ", disabledCodes), removed);
+    }
 
     private TextCommandResult CheckLookedAtBlock(IPlayer player, string? languageCode)
     {

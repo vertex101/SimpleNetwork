@@ -64,6 +64,7 @@ public class BlockEntityNetworkPort : BlockEntity
     {
         var block = PortBlock;
         if (block == null || modSystem?.Access == null) return;
+        if (!modSystem.Config.EnableImportExport) return; // switched off by the server owner
         if (block.IsExporter && Filter == null) return; // exporters only run with a filter
 
         var world = Api.World;
@@ -153,6 +154,11 @@ public class BlockEntityNetworkPort : BlockEntity
     public override void GetBlockInfo(IPlayer forPlayer, StringBuilder dsc)
     {
         base.GetBlockInfo(forPlayer, dsc);
+        if (modSystem != null && !modSystem.Config.EnableImportExport)
+        {
+            dsc.AppendLine(L.Get("port-disabled"));
+            return;
+        }
         bool exporter = PortBlock?.IsExporter == true;
 
         if (Filter != null) dsc.AppendLine(L.Get("port-filter", Filter.GetName()));

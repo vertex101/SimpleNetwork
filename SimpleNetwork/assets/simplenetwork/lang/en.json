@@ -3,6 +3,12 @@
     "block-terminal-*": "Network Terminal",
     "blockdesc-cable": "Links storage containers and terminals into one network.",
     "blockdesc-terminal-*": "Right-click to browse, take from and add to everything stored in the connected network.",
+    "block-chiseledcable": "Covered Network Cable",
+    "chiseledcable-info": "A network cable runs through this block.",
+    "msg-cover-noaccess": "You don't have permission to build here.",
+    "msg-disabled-wireless": "The Wireless Terminal is disabled on this server.",
+    "msg-disabled-configurator": "The Network Configurator is disabled on this server.",
+    "port-disabled": "Importers and exporters are disabled on this server.",
     "block-importer-*": "Network Importer",
     "block-exporter-*": "Network Exporter",
     "blockdesc-importer-*": "Pulls items out of the block it faces and into the network.",
@@ -76,7 +82,7 @@
     "cmd-check-not-storage": "This block is NOT network storage.",
 
     "handbook-cable-title": "How networks work",
-    "handbook-cable-text": "Cables join storage into one network. A cable links to every cable, terminal and storage block it touches; arms on the cable show what it is connected to.\n\nStorage counts when it touches a cable or a terminal's cable port. By default that is chests, trunks, reed baskets, storage vessels, labeled chests and crates. Server owners can add more storage types in the simplenetwork.json config file; look at a block and type <i>/stn check</i> to see whether it counts.\n\nStorage inside someone else's land claim, or padlocked by someone else, is skipped.",
+    "handbook-cable-text": "Cables join storage into one network. A cable links to every cable, terminal and storage block it touches; arms on the cable show what it is connected to.\n\nStorage counts when it touches a cable or a terminal's cable port. By default that is chests, trunks, reed baskets, storage vessels, labeled chests and crates. Server owners can add more storage types in the simplenetwork.json config file; look at a block and type <i>/stn check</i> to see whether it counts.\n\nStorage inside someone else's land claim, or padlocked by someone else, is skipped.\n\n<strong>Hiding cables:</strong> right-click a cable while holding a chiseled block to hide the cable inside it. The network still runs through, and you can keep chiseling the block. Breaking it gives you back both the chiseled block and the cable.",
     "handbook-terminal-title": "Using the terminal",
     "handbook-terminal-text": "The terminal shows everything stored in its network. It connects through the cable ports on its top, bottom and back, and faces you when placed.\n\n<strong>Taking items:</strong> left-click takes a stack, right-click takes one, shift + left-click sends a stack straight to your inventory.\n<strong>Storing items:</strong> click the grid while holding items, or shift-click items in your inventory.\n<strong>Crafting:</strong> used-up ingredients are refilled from the network after each craft. Shift-click the output to keep crafting until your inventory is full or the ingredients run out.\n<strong>Recipes:</strong> switch the view to Recipes or Craftable, then click a recipe to fill the crafting grid with its ingredients.",
 

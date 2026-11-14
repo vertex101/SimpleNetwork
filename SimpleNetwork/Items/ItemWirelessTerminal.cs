@@ -46,6 +46,12 @@ public class ItemWirelessTerminal : Item
         if (byEntity is not EntityPlayer { Player: IServerPlayer player } || slot.Itemstack == null) return;
         var world = byEntity.World;
 
+        if (!api.ModLoader.GetModSystem<SimpleNetworkModSystem>().Config.EnableWirelessTerminal)
+        {
+            Tell(player, "msg-disabled-wireless");
+            return;
+        }
+
         // Sneak + right-click a terminal: link to it.
         if (blockSel != null && byEntity.Controls.ShiftKey && world.BlockAccessor.GetBlock(blockSel.Position) is BlockNetworkTerminal)
         {

@@ -7,6 +7,7 @@ Link your chests, crates and vessels into one storage network with cables. Searc
 ## Features
 
 - **Network Cables** connect storage into one network, with arms that show what each cable is connected to.
+- **Covered cables**: right-click a cable with a chiseled block to hide the cable inside it; the network still runs through.
 - **Network Terminal**: a searchable, sortable view of everything stored, with taking and storing by click or shift-click.
 - **Built-in crafting** with auto-refill from the network, shift-click craft-all, and recipe lookup that fills the grid for you.
 - **Wireless Terminal**: open a linked terminal's network from up to 64 blocks away (configurable).
@@ -35,6 +36,11 @@ The server's `ModConfig/simplenetwork.json` is created on first start:
 | `WirelessRange` | 64 | Wireless terminal range in blocks; `0` = unlimited |
 | `PortIntervalMs` | 1000 | How often importers and exporters move items |
 | `PortTransferAmount` | 8 | Items moved each time |
+| `EnableWirelessTerminal` | true | Allow the Wireless Terminal |
+| `EnableImportExport` | true | Allow the Network Importer and Exporter |
+| `EnableConfigurator` | true | Allow the Network Configurator (container priorities and filters) |
+
+Switching a feature off removes its crafting recipe (after a server restart) and stops existing ones from working (also right after `/stn reload`). The blocks and items stay in the game, so worlds that already have them don't break; with the configurator off, saved priorities and filters are ignored.
 
 Commands (`/stn` is short for `/simplenetwork`):
 

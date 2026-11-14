@@ -61,9 +61,12 @@ public class NetworkCache
         var accessor = sapi.World.BlockAccessor;
         long now = sapi.World.ElapsedMilliseconds;
 
+        // With the configurator switched off, saved priorities and filters are simply ignored.
+        var settings = modSystem.Config.EnableConfigurator ? modSystem.StorageSettings : null;
+
         if (byNetworkBlock.TryGetValue(start, out var entry) && now - entry.CreatedMs < MaxAgeMs)
         {
-            var cached = NetworkScanner.BuildResult(accessor, entry.Topology, modSystem.StorageFilter, canUseContainer, modSystem.StorageSettings);
+            var cached = NetworkScanner.BuildResult(accessor, entry.Topology, modSystem.StorageFilter, canUseContainer, settings);
             if (cached != null) return cached;
             Invalidate(); // something on the network vanished without an event; start over
         }
@@ -72,7 +75,7 @@ public class NetworkCache
         var newEntry = new Entry { Topology = topology, CreatedMs = now };
         foreach (var pos in topology.NetworkBlocks) byNetworkBlock[pos] = newEntry;
 
-        return NetworkScanner.BuildResult(accessor, topology, modSystem.StorageFilter, canUseContainer, modSystem.StorageSettings)
+        return NetworkScanner.BuildResult(accessor, topology, modSystem.StorageFilter, canUseContainer, settings)
                ?? new NetworkScanResult();
     }
 }

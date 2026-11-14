@@ -98,6 +98,12 @@ public class TerminalServer
         var entity = player.Entity;
         if (entity == null) return;
 
+        if (!modSystem.Config.EnableWirelessTerminal)
+        {
+            Tell("msg-disabled-wireless");
+            return;
+        }
+
         int range = modSystem.Config.WirelessRange;
         double distance = entity.Pos.DistanceTo(terminalPos.ToVec3d().Add(0.5, 0.5, 0.5));
         bool sameDimension = entity.Pos.Dimension == terminalPos.dimension;

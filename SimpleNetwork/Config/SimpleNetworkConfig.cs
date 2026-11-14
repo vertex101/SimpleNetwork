@@ -37,6 +37,19 @@ public class SimpleNetworkConfig
     /// <summary>How many items an importer or exporter moves each time.</summary>
     public int PortTransferAmount { get; set; } = 8;
 
+    // Feature switches for server owners. Turning one off removes its crafting recipe (takes effect
+    // after a server restart) and stops existing ones from working (also right after /stn reload).
+    // The blocks and items themselves stay in the game, so worlds that already have them don't break.
+
+    /// <summary>Allow the Wireless Terminal.</summary>
+    public bool EnableWirelessTerminal { get; set; } = true;
+
+    /// <summary>Allow the Network Importer and Network Exporter.</summary>
+    public bool EnableImportExport { get; set; } = true;
+
+    /// <summary>Allow the Network Configurator (container priorities and filters).</summary>
+    public bool EnableConfigurator { get; set; } = true;
+
     public static SimpleNetworkConfig CreateDefault() => new()
     {
         StorageBlockEntityClasses = new()

@@ -1,0 +1,20 @@
+{
+	// A network cable hidden inside a chiseled block. Copied from the game's own chiseledblock.json so it
+	// behaves exactly like one; only the class differs (it also carries the network). Not craftable or in
+	// the creative inventory: it's made by right-clicking a cable with a chiseled block.
+	code: "chiseledcable",
+	class: "SimpleNetwork.ChiseledCable",
+	entityClass: "Chisel",
+	entityBehaviors: [ { name: "SupportBeam" }, { name: "MicroblockSnowCover" } ],
+	attributes: {
+		dropSelf: true,
+		handbook: { exclude: true }
+	},
+	shape: { base: "game:block/basic/cube" },
+	replaceable: 90,
+	drops: [],
+	sidesolid: { all: false },
+	sideopaque: { all: false },
+	sideao: { all: true },
+	lightAbsorption: 99
+}

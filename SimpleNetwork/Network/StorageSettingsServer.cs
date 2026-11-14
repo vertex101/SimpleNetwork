@@ -32,6 +32,11 @@ public class StorageSettingsServer
     /// <summary>Called when a player sneak + right-clicks a block with the configurator.</summary>
     public void Open(IServerPlayer player, BlockPos pos)
     {
+        if (!modSystem.Config.EnableConfigurator)
+        {
+            player.SendMessage(GlobalConstants.GeneralChatGroup, L.GetL(player.LanguageCode, "msg-disabled-configurator"), EnumChatType.Notification);
+            return;
+        }
         if (!CheckAllowed(player, pos, tellPlayer: true)) return;
         SendSettings(player, pos, open: true);
     }
@@ -76,6 +81,7 @@ public class StorageSettingsServer
 
     private void OnChangeRequested(IServerPlayer player, StorageSettingsPacket packet)
     {
+        if (!modSystem.Config.EnableConfigurator) return;
         var pos = new BlockPos(packet.X, packet.Y, packet.Z).SetDimension(packet.Dimension);
         if (!CheckAllowed(player, pos, tellPlayer: true)) return;
 

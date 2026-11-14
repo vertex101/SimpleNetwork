@@ -7,7 +7,7 @@
         "Vertex101"
     ],
     "description": "Link your chests, crates and vessels into one storage network with cables. Search, sort and craft from all of it at a terminal, reach it wirelessly, automate with importers and exporters, and keep storage organised with priorities and filters.",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "dependencies": {
         "game": "1.22.0"
     }

@@ -94,6 +94,11 @@ public class StorageConfigPacket
     public List<string>? StorageBlockEntityClasses;
     public List<string>? StorageBlockCodes;
     public List<string>? ExcludedBlockCodes;
+
+    // The server's feature switches, so the client can show "disabled on this server" where relevant.
+    public bool EnableWirelessTerminal = true;
+    public bool EnableImportExport = true;
+    public bool EnableConfigurator = true;
 }
 
 /// <summary>Client → server: the player closed the terminal dialog.</summary>
