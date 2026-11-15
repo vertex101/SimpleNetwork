@@ -5,13 +5,16 @@ using Vintagestory.API.Config;
 namespace SimpleNetwork.Terminal;
 
 /// <summary>
-/// A hidden inventory that exists while a terminal is open, so that shift-clicking an item
-/// in your hotbar/backpack sends it to the network, the same way it would go into an open chest.
+/// A hidden inventory that exists while a terminal is open, so that shift-clicking an item sends
+/// it to the network, the same way it would go into an open chest.
 ///
 /// The game's shift-click picks the open inventory that rates itself the best fit, so this one
-/// rates itself very highly, but only for items coming from the player's hotbar or backpack
-/// (crafting output and the crafting grid keep their normal behaviour). The server empties it
-/// into the network straight away, so it never holds anything for long.
+/// rates itself very highly for items coming from:
+///  - the player's hotbar or backpack, and
+///  - any other open container that isn't part of the player (a chest, crate, vessel, firepit...).
+/// Items from the player's other inventories (crafting grid and its output, clothing, the mouse
+/// cursor) keep their normal behaviour. The server empties the intake into the network straight
+/// away, so it never holds anything for long.
 /// </summary>
 public class InventoryNetworkIntake : InventoryGeneric
 {
@@ -30,13 +33,27 @@ public class InventoryNetworkIntake : InventoryGeneric
 
     public override WeightedSlot GetBestSuitedSlot(ItemSlot sourceSlot, ItemStackMoveOperation? op = null, List<ItemSlot>? skipSlots = null)
     {
-        string? sourceClass = sourceSlot.Inventory?.ClassName;
-        if (sourceClass != GlobalConstants.hotBarInvClassName && sourceClass != GlobalConstants.backpackInvClassName)
+        if (!AcceptsFrom(sourceSlot.Inventory))
         {
             return new WeightedSlot(); // no slot: let the game pick another destination
         }
 
         return base.GetBestSuitedSlot(sourceSlot, op, skipSlots);
+    }
+
+    private bool AcceptsFrom(InventoryBase? source)
+    {
+        if (source == null || source == this) return false;
+
+        string? sourceClass = source.ClassName;
+        if (sourceClass == GlobalConstants.hotBarInvClassName || sourceClass == GlobalConstants.backpackInvClassName)
+        {
+            return true;
+        }
+
+        // Every other inventory that belongs to the player (crafting grid, clothing, mouse cursor...)
+        // keeps its normal shift-click. Containers in the world (chests, machines) feed the network.
+        return source is not InventoryBasePlayer;
     }
 
     public override float GetSuitability(ItemSlot sourceSlot, ItemSlot targetSlot, bool isMerge) => IntakeSuitability;
