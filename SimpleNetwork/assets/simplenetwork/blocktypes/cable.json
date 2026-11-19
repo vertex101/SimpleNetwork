@@ -1,7 +1,7 @@
 {
 	code: "cable",
 	class: "SimpleNetwork.Cable",
-	creativeinventory: { "general": ["*"] },
+	creativeinventory: { "general": ["*"], "simplenetwork": ["*"] },
 	attributes: {
 		handbook: {
 			extraSections: [

@@ -99,6 +99,7 @@ public class StorageConfigPacket
     public bool EnableWirelessTerminal = true;
     public bool EnableImportExport = true;
     public bool EnableConfigurator = true;
+    public bool EnableChunkLoading = true;
 }
 
 /// <summary>Client → server: the player closed the terminal dialog.</summary>

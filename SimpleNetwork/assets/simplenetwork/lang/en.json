@@ -1,8 +1,16 @@
 {
+    "game:tabname-simplenetwork": "SimpleNetwork",
+
     "block-cable": "Network Cable",
     "block-terminal-*": "Network Terminal",
     "blockdesc-cable": "Links storage containers and terminals into one network.",
     "blockdesc-terminal-*": "Right-click to browse, take from and add to everything stored in the connected network.",
+    "block-anchor": "Network Anchor",
+    "blockdesc-anchor": "Keeps the area its network covers loaded, so importers, exporters and wireless terminals keep working while nobody is nearby.",
+    "anchor-loaded": "Keeping {0} chunk area(s) loaded",
+    "anchor-limit-reached": "The network is larger than this anchor can hold: only the {0} areas nearest to it are kept loaded.",
+    "anchor-disabled": "Chunk loading is disabled on this server.",
+    "msg-anchor-limit": "You can't place more than {0} Network Anchor(s).",
     "block-chiseledcable": "Covered Network Cable",
     "chiseledcable-info": "A network cable runs through this block.",
     "msg-cover-noaccess": "You don't have permission to build here.",
@@ -96,6 +104,9 @@
     "handbook-configurator-title": "Priorities and filters",
     "handbook-configurator-text": "Sneak + right-click any network storage container with the configurator to open its settings.\n\n<strong>Priority</strong> (-10 to 10, default 0): containers with a higher priority are filled first, and items are taken from lower-priority containers first. Give your main chest a high priority to keep it stocked.\n\n<strong>Filter</strong> (up to 9 items): a container with a filter only accepts those items from the network. Containers whose filter names an item get it before unfiltered containers of the same priority. Items already inside are never moved out.\n\nBreaking a container clears its settings.",
 
+    "handbook-anchor-title": "Keeping your network running",
+    "handbook-anchor-text": "The world only runs near players: when everyone leaves, importers and exporters stop, and wireless terminals can't reach the network. A Network Anchor keeps the area its network covers loaded, so everything keeps working while you're away.\n\nPlace it anywhere on the network; it connects on every side, like a cable. Look at it to see how many chunk areas (32 by 32 blocks each) it keeps loaded. Each anchor holds up to 9 areas, nearest to it first, and each player can place up to 2 anchors. Server owners can change both limits, or switch chunk loading off, in simplenetwork.json.",
+
     "guide-title": "Storage networks",
-    "guide-text": "<strong>SimpleNetwork</strong> lets you reach all of your storage from one place.\n\n<strong>1. Craft cables and a terminal.</strong> One copper ingot makes four Network Cables. A Network Terminal is made from copper ingots, clear quartz and a cable.\n\n<strong>2. Connect your storage.</strong> Run cables so they touch your chests, crates and vessels. Everything connected becomes one network.\n\n<strong>3. Connect the terminal.</strong> Attach a cable to the terminal's top, bottom or back port.\n\n<strong>4. Use it.</strong> Right-click the terminal to search, sort, take and store items, and to craft straight from your storage.\n\n<strong>5. Go wireless (optional).</strong> Craft a Wireless Terminal, sneak + right-click your terminal to link it, and open your network from anywhere within range.\n\n<strong>6. Automate (optional).</strong> A Network Importer pulls items from the block it faces into the network; a Network Exporter pushes a chosen item from the network into the block it faces. Use them to collect from hoppers or keep a firepit fuelled.\n\n<strong>7. Organise (optional).</strong> With a Network Configurator, sneak + right-click a container to give it a priority or a filter, e.g. so ores always go into one particular chest."
+    "guide-text": "<strong>SimpleNetwork</strong> lets you reach all of your storage from one place.\n\n<strong>1. Craft cables and a terminal.</strong> One copper ingot makes four Network Cables. A Network Terminal is made from copper ingots, clear quartz and a cable.\n\n<strong>2. Connect your storage.</strong> Run cables so they touch your chests, crates and vessels. Everything connected becomes one network.\n\n<strong>3. Connect the terminal.</strong> Attach a cable to the terminal's top, bottom or back port.\n\n<strong>4. Use it.</strong> Right-click the terminal to search, sort, take and store items, and to craft straight from your storage.\n\n<strong>5. Go wireless (optional).</strong> Craft a Wireless Terminal, sneak + right-click your terminal to link it, and open your network from anywhere within range.\n\n<strong>6. Automate (optional).</strong> A Network Importer pulls items from the block it faces into the network; a Network Exporter pushes a chosen item from the network into the block it faces. Use them to collect from hoppers or keep a firepit fuelled.\n\n<strong>7. Organise (optional).</strong> With a Network Configurator, sneak + right-click a container to give it a priority or a filter, e.g. so ores always go into one particular chest.\n\n<strong>8. Keep it running (optional).</strong> A Network Anchor keeps your network's area loaded while you're away, so importers and exporters keep working."
 }

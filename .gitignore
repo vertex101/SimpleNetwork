@@ -679,3 +679,6 @@ tools/
 
 # ModDB promo images (logos), kept locally only
 promo/
+
+# Other people's mods kept locally for compatibility checks (not ours to redistribute)
+mods/

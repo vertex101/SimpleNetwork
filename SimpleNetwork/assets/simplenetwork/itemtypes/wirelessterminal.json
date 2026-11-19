@@ -8,7 +8,7 @@
 		casing: { base: "block/terminal/side" },
 		antenna: { base: "block/cable/core" }
 	},
-	creativeinventory: { "general": ["*"] },
+	creativeinventory: { "general": ["*"], "simplenetwork": ["*"] },
 	// Inventory icon: the default view looks straight at the screen; turn it slightly so the tablet looks 3D.
 	guiTransform: {
 		translation: { x: 0, y: 0, z: 0 },

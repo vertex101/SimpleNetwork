@@ -7,7 +7,7 @@
 		handle: { base: "block/cable/sheath" },
 		head: { base: "block/cable/core" }
 	},
-	creativeinventory: { "general": ["*"] },
+	creativeinventory: { "general": ["*"], "simplenetwork": ["*"] },
 	guiTransform: {
 		translation: { x: 0, y: 0, z: 0 },
 		rotation: { x: -12, y: 24, z: -20 },

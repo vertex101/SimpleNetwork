@@ -10,7 +10,7 @@
 	behaviors: [
 		{ name: "HorizontalOrientable", properties: { dropBlockFace: "east" } }
 	],
-	creativeinventory: { "general": ["*-east"] },
+	creativeinventory: { "general": ["*-east"], "simplenetwork": ["*-east"] },
 	attributes: {
 		handbook: {
 			groupBy: ["terminal-*"],

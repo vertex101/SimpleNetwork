@@ -13,6 +13,7 @@ Link your chests, crates and vessels into one storage network with cables. Searc
 - **Wireless Terminal**: open a linked terminal's network from up to 64 blocks away (configurable).
 - **Network Importer / Exporter**: move items between the network and the block they face, using the game's own hopper slot rules.
 - **Network Configurator**: give containers a priority and an item filter.
+- **Network Anchor**: keeps the area a network covers loaded, so importers, exporters and wireless terminals keep working while nobody is nearby.
 - **Multiplayer-safe**: respects land claims and padlocks, and all actions are checked on the server.
 
 The in-game handbook (press H) has pages for every block and item, plus a "Storage networks" guide.
@@ -39,6 +40,9 @@ The server's `ModConfig/simplenetwork.json` is created on first start:
 | `EnableWirelessTerminal` | true | Allow the Wireless Terminal |
 | `EnableImportExport` | true | Allow the Network Importer and Exporter |
 | `EnableConfigurator` | true | Allow the Network Configurator (container priorities and filters) |
+| `EnableChunkLoading` | true | Let Network Anchors keep their networks' chunks loaded |
+| `MaxChunksPerAnchor` | 9 | Most chunk columns (32×32 blocks) one anchor keeps loaded, nearest first; `0` = no limit |
+| `MaxAnchorsPerPlayer` | 2 | Most Network Anchors one player may place; `0` = no limit |
 
 When a newer version of the mod adds a default storage type, it is added to existing config files once (tracked by `ConfigVersion`); if you remove it afterwards, it stays removed.
 

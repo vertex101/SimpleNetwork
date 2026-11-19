@@ -1,0 +1,12 @@
+{
+	ingredientPattern: "ICI,QGQ,ICI",
+	ingredients: {
+		"I": { type: "item", code: "game:ingot-copper" },
+		"C": { type: "block", code: "simplenetwork:cable" },
+		"Q": { type: "item", code: "game:clearquartz" },
+		"G": { type: "item", code: "game:gear-temporal" }
+	},
+	width: 3,
+	height: 3,
+	output: { type: "block", code: "simplenetwork:anchor" }
+}

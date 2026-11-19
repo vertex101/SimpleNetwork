@@ -7,7 +7,7 @@
 	variantgroups: [
 		{ code: "side", states: ["north", "east", "south", "west", "up", "down"] }
 	],
-	creativeinventory: { "general": ["*-north"] },
+	creativeinventory: { "general": ["*-north"], "simplenetwork": ["*-north"] },
 	attributes: {
 		portMode: "export",
 		handbook: {

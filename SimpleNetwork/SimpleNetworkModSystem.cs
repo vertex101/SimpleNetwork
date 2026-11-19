@@ -43,6 +43,9 @@ public class SimpleNetworkModSystem : ModSystem
     /// <summary>Remembered network layouts (server only).</summary>
     public NetworkCache? NetworkCache { get; private set; }
 
+    /// <summary>Keeps Network Anchors' chunks loaded (server only).</summary>
+    public ChunkAnchorManager? ChunkAnchors { get; private set; }
+
     /// <summary>Called by network blocks when they're placed or removed (by anything, not just players).</summary>
     public static void OnNetworkChanged(IWorldAccessor world)
     {
@@ -71,6 +74,8 @@ public class SimpleNetworkModSystem : ModSystem
         api.RegisterBlockClass("SimpleNetwork.Port", typeof(BlockNetworkPort));
         api.RegisterBlockEntityClass("SimpleNetwork.Port", typeof(BlockEntityNetworkPort));
         api.RegisterItemClass("SimpleNetwork.Configurator", typeof(ItemNetworkConfigurator));
+        api.RegisterBlockClass("SimpleNetwork.Anchor", typeof(BlockNetworkAnchor));
+        api.RegisterBlockEntityClass("SimpleNetwork.Anchor", typeof(BlockEntityNetworkAnchor));
     }
 
     public override void StartServerSide(ICoreServerAPI api)
@@ -79,6 +84,7 @@ public class SimpleNetworkModSystem : ModSystem
         Access = new AccessRules(api);
         StorageSettings = new StorageSettingsRegistry(api);
         NetworkCache = new NetworkCache(api, this);
+        ChunkAnchors = new ChunkAnchorManager(api);
         LoadConfig();
 
         // Message types must be registered in the same order on client and server.
@@ -96,6 +102,10 @@ public class SimpleNetworkModSystem : ModSystem
         // Recipes are loaded by now, and players can't have joined yet (they receive the recipe list
         // when they join), so this is the moment to take out recipes of disabled features.
         api.Event.ServerRunPhase(EnumServerRunPhase.WorldReady, RemoveDisabledRecipes);
+
+        // The world is loaded and saved anchors are known: request their chunks again
+        // (the server doesn't remember force-loaded chunks across restarts).
+        api.Event.ServerRunPhase(EnumServerRunPhase.RunGame, () => ChunkAnchors?.SetEnabled(Config.EnableChunkLoading));
 
         // Descriptions use the server's language; command replies use the language of whoever ran the command.
         api.ChatCommands.Create("simplenetwork")
@@ -138,7 +148,8 @@ public class SimpleNetworkModSystem : ModSystem
                 ExcludedBlockCodes = packet.ExcludedBlockCodes ?? new(),
                 EnableWirelessTerminal = packet.EnableWirelessTerminal,
                 EnableImportExport = packet.EnableImportExport,
-                EnableConfigurator = packet.EnableConfigurator
+                EnableConfigurator = packet.EnableConfigurator,
+                EnableChunkLoading = packet.EnableChunkLoading
             };
             StorageFilter = new StorageFilter(Config);
         });
@@ -180,6 +191,9 @@ public class SimpleNetworkModSystem : ModSystem
         StorageFilter = new StorageFilter(loaded);
         NetworkCache?.Invalidate(); // the allow-list or size limit may have changed
 
+        // On /stn reload (not during startup: then the RunGame phase does it once the world is ready).
+        if (sapi.Server.CurrentRunPhase == EnumServerRunPhase.RunGame) ChunkAnchors?.SetEnabled(loaded.EnableChunkLoading);
+
         // Let connected players' cables pick up the new allow-list (null during server startup).
         serverChannel?.BroadcastPacket(BuildStorageConfigPacket());
         return true;
@@ -192,7 +206,8 @@ public class SimpleNetworkModSystem : ModSystem
         ExcludedBlockCodes = Config.ExcludedBlockCodes,
         EnableWirelessTerminal = Config.EnableWirelessTerminal,
         EnableImportExport = Config.EnableImportExport,
-        EnableConfigurator = Config.EnableConfigurator
+        EnableConfigurator = Config.EnableConfigurator,
+        EnableChunkLoading = Config.EnableChunkLoading
     };
 
     /// <summary>Takes the crafting recipes of switched-off features out of the game (server start only).</summary>

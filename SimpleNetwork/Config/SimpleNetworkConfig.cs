@@ -59,6 +59,15 @@ public class SimpleNetworkConfig
     /// <summary>Allow the Network Configurator (container priorities and filters).</summary>
     public bool EnableConfigurator { get; set; } = true;
 
+    /// <summary>Let Network Anchors keep their networks' chunks loaded (applies right after /stn reload).</summary>
+    public bool EnableChunkLoading { get; set; } = true;
+
+    /// <summary>Most chunk columns (32x32 blocks each) one anchor keeps loaded; nearest to the anchor first. 0 = no limit.</summary>
+    public int MaxChunksPerAnchor { get; set; } = 9;
+
+    /// <summary>Most Network Anchors one player may place. 0 = no limit.</summary>
+    public int MaxAnchorsPerPlayer { get; set; } = 2;
+
     public static SimpleNetworkConfig CreateDefault() => new()
     {
         ConfigVersion = CurrentConfigVersion,

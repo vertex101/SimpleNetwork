@@ -1,0 +1,30 @@
+{
+	code: "anchor",
+	class: "SimpleNetwork.Anchor",
+	entityClass: "SimpleNetwork.Anchor",
+	creativeinventory: { "general": ["*"], "simplenetwork": ["*"] },
+	attributes: {
+		handbook: {
+			extraSections: [
+				{ title: "simplenetwork:handbook-anchor-title", text: "simplenetwork:handbook-anchor-text" }
+			]
+		}
+	},
+	drawtype: "cube",
+	textures: {
+		all: { base: "block/anchor/side" },
+		up: { base: "block/terminal/top" },
+		down: { base: "block/terminal/top" }
+	},
+	blockmaterial: "Metal",
+	resistance: 3,
+	lightHsv: [ 25, 2, 6 ],
+	sidesolid: { all: true },
+	sideopaque: { all: true },
+	sounds: {
+		"place": "game:block/chute",
+		"break": "game:block/chute",
+		"hit": "game:block/chute",
+		"walk": "game:walk/stone"
+	}
+}
